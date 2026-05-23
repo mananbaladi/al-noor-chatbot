@@ -1,0 +1,6 @@
+.env
+venv/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+al-noor-chatbot-9944c1fab412.json
