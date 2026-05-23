@@ -1,20 +1,16 @@
-"""
-noor.py
-Core logic for the Al-Noor chatbot.
-"""
 import gspread
 import datetime
+import streamlit as st
 from google.oauth2.service_account import Credentials
 from chatbot.gemini_client import ask_gemini, ask_gemini_stream
 from chatbot.prompts import REFRAME_SYSTEM_PROMPT, FOLLOW_UP_SYSTEM_PROMPT
 
 SHEET_ID = "1iE7ZqGcA36B_T269ryDnsBJAHR0g2lBL4WRx-nNN7uY"
-JSON_FILE = "al-noor-chatbot-9944c1fab412.json"
 
 def log_to_sheets(question):
     try:
         scopes = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = Credentials.from_service_account_file(JSON_FILE, scopes=scopes)
+        creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
         client = gspread.authorize(creds)
         sheet = client.open_by_key(SHEET_ID).sheet1
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
